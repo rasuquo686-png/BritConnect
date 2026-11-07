@@ -1,0 +1,39 @@
+﻿No.,Column Name,Data Type,Description
+1,Customer ID,Text,Unique identifier assigned to each customer.
+2,Customer Segment,Text,"Customer classification (for example, Consumer or Small Business)."
+3,Age,Whole Number,Customer age in years.
+4,Age Band,Text,Age grouping used for demographic analysis.
+5,Gender,Text,Recorded customer gender.
+6,UK Nation,Text,UK constituent nation associated with the customer.
+7,City,Text,Customer city.
+8,Acquisition Channel,Text,Channel through which the customer was acquired.
+9,Join Date,Date,Date the customer first joined BritConnect.
+10,Tenure Months,Whole Number,"Length of customer relationship, in months."
+11,Service Type,Text,Telecommunications service subscribed to.
+12,Plan Name,Text,Name of the subscription package.
+13,Contract Type,Text,Contract arrangement or term.
+14,Contract Start Date,Date,Date the current contract began.
+15,Contract End Date,Date,"Scheduled contract expiry date, where applicable."
+16,Auto Renew,Text,Whether the contract renews automatically.
+17,Monthly Charge GBP,Decimal Number,Monthly subscription charge in GBP (£).
+18,Average Monthly Usage GB,Decimal Number,Average monthly data usage in gigabytes.
+19,Data Allowance GB,Whole Number,Included monthly data allowance in gigabytes.
+20,Overage Charges GBP,Decimal Number,Additional usage charges in GBP (£).
+21,Discount Percent,Decimal Number,Discount percentage applied to the subscription.
+22,Payment Method,Text,Customer payment method.
+23,Direct Debit,Text,Whether the customer pays by direct debit.
+24,Late Payments 12M,Whole Number,Number of late payments in the preceding 12 months.
+25,Failed Payments 12M,Whole Number,Number of failed payments in the preceding 12 months.
+26,Support Tickets 12M,Whole Number,Number of support tickets in the preceding 12 months.
+27,Complaints 12M,Whole Number,Number of complaints in the preceding 12 months.
+28,Average Resolution Hours,Decimal Number,Average support issue resolution time in hours.
+29,Network Outages 12M,Whole Number,Number of network outages in the preceding 12 months.
+30,Satisfaction Score 1 10,Whole Number,Customer satisfaction score on a scale from 1 to 10.
+31,NPS Score,Whole Number,Customer advocacy score recorded in the dataset; higher values indicate stronger advocacy.
+32,Competitor Offer Received,Text,Whether the customer received an offer from a competitor.
+33,Churn Status,Text,Recorded customer state: Active or Churned.
+34,Churn Date,Date,Cancellation/churn date; typically blank for active customers.
+35,Churn Reason,Text,Reason for cancellation; typically blank for active customers.
+36,Lifetime Revenue GBP,Decimal Number,Cumulative recorded revenue from the customer in GBP (£).
+37,Monthly Revenue At Risk GBP,Decimal Number,Estimated monthly revenue exposed to churn in GBP (£).
+38,Churn Flag,Whole Number,"Binary churn outcome: 1 = Churned, 0 = Active."
