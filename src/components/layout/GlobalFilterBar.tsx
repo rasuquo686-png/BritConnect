@@ -53,10 +53,13 @@ export const GlobalFilterBar: React.FC<GlobalFilterBarProps> = ({
 
   return (
     <div className="bg-white dark:bg-[#071433] border-b border-[#D9DCE6] dark:border-[#1E3A8A] px-4 md:px-6 py-2.5 transition-colors">
-      <div className="flex flex-wrap items-center gap-2 text-xs">
-        <div className="flex items-center gap-1.5 text-[#6B7280] font-medium pr-1">
-          <SlidersHorizontal size={13} className="text-[#0B1F4B] dark:text-[#C9A227]" />
-          <span>Filters:</span>
+      <div className="flex flex-wrap items-center gap-3 text-xs">
+        <div className="flex items-center gap-1.5 text-[#856404] dark:text-[#E8D48A] font-semibold pr-1">
+          <span className="text-[#C9A227]">⏚</span>
+          <span>Cohort Scope:</span>
+          <span className="font-mono text-[#0B1F4B] dark:text-white font-bold tabular-nums">
+            {records.length.toLocaleString()} / {records.length.toLocaleString()} customers
+          </span>
         </div>
 
         {/* Customer Segment */}

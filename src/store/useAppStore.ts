@@ -323,7 +323,9 @@ export async function initializeAppState() {
     const savedScores = await db.loadScoredCustomers();
     const campaigns = await db.loadAllCampaigns();
 
-    if (savedDataset && savedDataset.records.length > 0) {
+    const needsDemoUpgrade = savedDataset && savedDataset.isSyntheticDemo && savedDataset.records.length !== 5000;
+
+    if (savedDataset && savedDataset.records.length > 0 && !needsDemoUpgrade) {
       updateAppState({
         records: savedDataset.records,
         datasetFileName: savedDataset.fileName,
@@ -338,12 +340,12 @@ export async function initializeAppState() {
         loadingMessage: '',
       });
     } else {
-      // Auto-load high-quality synthetic demo dataset so the user has immediate numbers
-      const demoRecords = generateSyntheticDemoDataset(1500, 2026);
+      // Auto-load high-quality synthetic demo dataset matching the 5,000 UK telecom benchmark cohort
+      const demoRecords = generateSyntheticDemoDataset(5000, 2026);
       const demoVersion: DatasetVersion = {
         id: `v_demo_${Date.now()}`,
         timestamp: new Date().toISOString(),
-        fileName: 'BritConnect_Synthetic_Demo_1500.csv',
+        fileName: 'BritConnect_Synthetic_Demo_5000.csv',
         rowCount: demoRecords.length,
         activeCount: demoRecords.filter((r) => Number(r['Churn Flag']) === 0).length,
         churnedCount: demoRecords.filter((r) => Number(r['Churn Flag']) === 1).length,

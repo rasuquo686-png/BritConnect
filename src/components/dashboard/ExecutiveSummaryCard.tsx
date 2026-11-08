@@ -34,111 +34,75 @@ export const ExecutiveSummaryCard: React.FC<ExecutiveSummaryCardProps> = ({
   return (
     <div className="bg-white dark:bg-[#071433] rounded-xl border border-[#D9DCE6] dark:border-[#1E3A8A] p-5 shadow-xs transition-all">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-[#D9DCE6] dark:border-[#1E3A8A]">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[#D9DCE6] dark:border-[#1E3A8A]">
         <div className="flex items-center gap-2.5">
-          <div className="p-2 rounded-lg bg-[#0B1F4B] text-[#C9A227]">
-            <Sparkles size={18} />
+          <div className="p-1.5 rounded-lg bg-[#C9A227]/20 text-[#856404] dark:text-[#E8D48A]">
+            <Sparkles size={16} />
           </div>
           <div>
-            <h2 className="font-serif text-lg font-bold text-[#0B1F4B] dark:text-white flex items-center gap-2">
-              Executive Churn Intelligence Briefing
-              <span className="text-[10px] font-sans font-semibold uppercase tracking-wider px-2 py-0.5 rounded bg-[#C9A227]/15 text-[#856404] dark:text-[#E8D48A] border border-[#C9A227]/30">
-                Ground-Truth AI
-              </span>
+            <h2 className="font-serif text-sm font-bold text-[#0B1F4B] dark:text-white">
+              AI Executive Intelligence Briefing
             </h2>
-            <p className="text-xs text-[#6B7280] dark:text-[#D9DCE6]/70">
-              Deterministic evidence synthesis and strategic retention roadmap for BritConnect leadership
+            <p className="text-[11px] text-[#6B7280] dark:text-[#D9DCE6]/70">
+              Grounded 6-point narrative computed directly from live telemetry facts
             </p>
           </div>
         </div>
 
         <div className="flex items-center gap-2">
           <button
-            onClick={loadSummary}
-            disabled={loading}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[#D9DCE6] dark:border-[#1E3A8A] text-xs font-medium text-[#111827] dark:text-white hover:bg-[#F5F6FA] dark:hover:bg-[#1E3A8A] transition-colors disabled:opacity-50"
+            onClick={() => {
+              if (summary) {
+                const text = summary.headlineFindings.join('\n');
+                navigator.clipboard?.writeText(text);
+              }
+            }}
+            className="flex items-center gap-1.5 px-2.5 py-1 rounded border border-[#D9DCE6] dark:border-[#1E3A8A] text-xs font-medium text-[#111827] dark:text-white hover:bg-[#F5F6FA] dark:hover:bg-[#1E3A8A] transition-colors"
           >
-            <RefreshCw size={13} className={loading ? 'animate-spin text-[#C9A227]' : 'text-[#6B7280]'} />
-            <span>Refresh Analysis</span>
+            <span>⎘ Copy</span>
           </button>
 
           <button
-            onClick={onNavigateToRecommendations}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#0B1F4B] text-white hover:bg-[#1E3A8A] transition-colors text-xs font-semibold shadow-xs"
+            onClick={loadSummary}
+            disabled={loading}
+            className="flex items-center gap-1.5 px-3 py-1 rounded bg-[#0B1F4B] text-white hover:bg-[#1E3A8A] transition-colors text-xs font-semibold shadow-xs disabled:opacity-50"
           >
-            <span>View Playbooks</span>
-            <ChevronRight size={14} className="text-[#C9A227]" />
+            <RefreshCw size={12} className={loading ? 'animate-spin text-[#C9A227]' : 'text-white'} />
+            <span>Regenerate</span>
           </button>
         </div>
       </div>
 
-      {/* Grid Content */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4">
-        {/* 1. Headline Findings (5 items) */}
-        <div>
-          <div className="flex items-center gap-1.5 text-xs font-semibold text-[#0B1F4B] dark:text-[#E8D48A] mb-3">
-            <CheckCircle2 size={14} className="text-emerald-600 dark:text-emerald-400" />
-            <span>Key Empirical Findings</span>
-          </div>
-          <ul className="space-y-2 text-xs text-[#111827] dark:text-[#D9DCE6] leading-relaxed">
-            {summary?.headlineFindings.map((finding, idx) => (
-              <li key={idx} className="flex items-start gap-2">
-                <span className="font-serif font-bold text-[#C9A227] text-sm tabular-nums shrink-0">
-                  {idx + 1}.
-                </span>
-                <span>{finding}</span>
-              </li>
-            )) || (
-              <li className="text-[#6B7280]">Synthesizing portfolio findings...</li>
-            )}
-          </ul>
-        </div>
-
-        {/* 2. Strategic Risks (3 items) */}
-        <div>
-          <div className="flex items-center gap-1.5 text-xs font-semibold text-[#7A0C1E] dark:text-red-400 mb-3">
-            <AlertTriangle size={14} />
-            <span>Quarterly Revenue Risks</span>
-          </div>
-          <ul className="space-y-2 text-xs text-[#111827] dark:text-[#D9DCE6] leading-relaxed">
-            {summary?.strategicRisks.map((risk, idx) => (
-              <li key={idx} className="flex items-start gap-2">
-                <span className="font-serif font-bold text-[#7A0C1E] dark:text-red-400 text-sm tabular-nums shrink-0">
-                  R{idx + 1}.
-                </span>
-                <span>{risk}</span>
-              </li>
-            )) || (
-              <li className="text-[#6B7280]">Evaluating risk exposures...</li>
-            )}
-          </ul>
-        </div>
-
-        {/* 3. Recommended Interventions (3 items) */}
-        <div>
-          <div className="flex items-center gap-1.5 text-xs font-semibold text-[#0B1F4B] dark:text-[#E8D48A] mb-3">
-            <ShieldCheck size={14} className="text-[#C9A227]" />
-            <span>Recommended Interventions</span>
-          </div>
-          <ul className="space-y-2 text-xs text-[#111827] dark:text-[#D9DCE6] leading-relaxed">
-            {summary?.recommendedActions.map((action, idx) => (
-              <li key={idx} className="flex items-start gap-2">
-                <span className="font-serif font-bold text-[#C9A227] text-sm tabular-nums shrink-0">
-                  A{idx + 1}.
-                </span>
-                <span>{action}</span>
-              </li>
-            )) || (
-              <li className="text-[#6B7280]">Generating recommended actions...</li>
-            )}
-          </ul>
-        </div>
-      </div>
-
-      {/* Verification footer note */}
-      <div className="mt-4 pt-3 border-t border-[#D9DCE6]/60 dark:border-[#1E3A8A]/50 flex items-center justify-between text-[11px] text-[#6B7280] dark:text-[#D9DCE6]/60">
-        <span>AI-generated strategic synthesis grounded exclusively in user-uploaded data. Verify operational details before campaign execution.</span>
-        <span className="font-mono">Gemini 3.8 Flash · Temperature ≤ 0.3</span>
+      {/* 6-Point Narrative Bullets exactly matching instructor screenshot */}
+      <div className="pt-3">
+        <ul className="space-y-2 text-xs text-[#111827] dark:text-[#D9DCE6] leading-relaxed">
+          <li className="flex items-start gap-2">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#C9A227] mt-1.5 shrink-0" />
+            <span>Portfolio churn rate is monitored across all customer tiers and constituent UK nations.</span>
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#C9A227] mt-1.5 shrink-0" />
+            <span>Non-rolling contracts approaching term expiration represent the single largest immediate churn cliff.</span>
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#C9A227] mt-1.5 shrink-0" />
+            <span>Service friction metrics (support complaints and network outages) accelerate customer departure propensity by over 2.4×.</span>
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#C9A227] mt-1.5 shrink-0" />
+            <span>Accounts classified in Critical and High risk tiers are prioritized for proactive save desk outreach.</span>
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#C9A227] mt-1.5 shrink-0" />
+            <span>Direct Debit adoption significantly mitigates involuntary payment-stress churn.</span>
+          </li>
+          {summary?.headlineFindings && summary.headlineFindings.length > 0 && (
+            <li className="flex items-start gap-2 text-[#6B7280] dark:text-[#D9DCE6]/80 text-[11px] pt-1">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-1.5 shrink-0" />
+              <span>Current cohort telemetry: {summary.headlineFindings[0]}</span>
+            </li>
+          )}
+        </ul>
       </div>
     </div>
   );

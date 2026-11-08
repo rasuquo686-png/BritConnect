@@ -70,99 +70,107 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onOpenUpload }) =>
         </div>
       </div>
 
-      {/* Executive KPI Cards Grid */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-3">
+      {/* Executive KPI Cards: Row 1 (6 cards) & Row 2 (6 cards) matching instructor layout */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+        {/* Row 1, Card 1: TOTAL CUSTOMERS */}
         <KpiCard
-          title="Total Customers"
+          title="TOTAL CUSTOMERS"
           value={kpis.totalCustomers.toLocaleString()}
-          subtitle="Portfolio cohort"
+          subtitle={`${kpis.activeCustomers.toLocaleString()} active`}
           formula={KPI_FORMULAS.totalCustomers}
         />
+
+        {/* Row 1, Card 2: PORTFOLIO CHURN */}
         <KpiCard
-          title="Active Customers"
-          value={kpis.activeCustomers.toLocaleString()}
-          subtitle="In service"
-          formula={KPI_FORMULAS.activeCustomers}
-        />
-        <KpiCard
-          title="Portfolio Churn Rate"
+          title="PORTFOLIO CHURN"
           value={`${kpis.churnRate}%`}
-          subtitle="Realized departures"
+          subtitle={`${kpis.churnedCustomers.toLocaleString()} churned / ${kpis.totalCustomers.toLocaleString()} total evaluat...`}
           formula={KPI_FORMULAS.churnRate}
           highlightColor={kpis.churnRate > 20 ? 'red' : 'default'}
         />
+
+        {/* Row 1, Card 3: ACTIVE MRR */}
         <KpiCard
-          title="Active MRR"
-          value={`£${kpis.activeMrr.toLocaleString()}`}
-          subtitle="Monthly Recurring Rev"
+          title="ACTIVE MRR"
+          value={`£${kpis.activeMrr.toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`}
+          subtitle={`Eff: £${kpis.activeMrr.toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`}
           formula={KPI_FORMULAS.activeMrr}
-          highlightColor="navy"
         />
+
+        {/* Row 1, Card 4: MONTHLY RISK */}
         <KpiCard
-          title="Monthly Revenue at Risk"
-          value={`£${kpis.monthlyRevenueAtRisk.toLocaleString()}`}
-          subtitle="Predicted monthly exposure"
+          title="MONTHLY RISK"
+          value={`£${kpis.monthlyRevenueAtRisk.toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`}
+          subtitle="Model expected monthly"
           formula={KPI_FORMULAS.monthlyRevenueAtRisk}
           highlightColor="gold"
         />
+
+        {/* Row 1, Card 5: 12M EXPECTED LOSS */}
         <KpiCard
-          title="12M Expected Loss"
-          value={`£${kpis.expectedLoss12M.toLocaleString()}`}
-          subtitle="Annualized exposure"
+          title="12M EXPECTED LOSS"
+          value={`£${kpis.expectedLoss12M.toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`}
+          subtitle="12M annualized loss"
           formula={KPI_FORMULAS.expectedLoss12M}
-          highlightColor="red"
         />
+
+        {/* Row 1, Card 6: CRITICAL & HIGH RISK */}
         <KpiCard
-          title="Critical & High-Risk"
+          title="CRITICAL & HIGH RISK"
           value={kpis.criticalAndHighRiskCount.toLocaleString()}
-          subtitle={`${kpis.highRiskPct}% of active base`}
+          subtitle={`${kpis.criticalRiskCount.toLocaleString()} critical (≥70%)`}
           formula={KPI_FORMULAS.criticalAndHighRiskCount}
           highlightColor="red"
         />
+
+        {/* Row 2, Card 1: AVERAGE TENURE */}
         <KpiCard
-          title="Average Tenure"
-          value={`${kpis.avgTenureMonths} mos`}
+          title="AVERAGE TENURE"
+          value={`${kpis.avgTenureMonths}m`}
           subtitle="Relationship length"
           formula={KPI_FORMULAS.avgTenureMonths}
         />
+
+        {/* Row 2, Card 2: AVERAGE CSAT */}
         <KpiCard
-          title="Average CSAT"
+          title="AVERAGE CSAT"
           value={`${kpis.avgSatisfaction} / 10`}
-          subtitle="Customer satisfaction"
+          subtitle="Satisfaction score"
           formula={KPI_FORMULAS.avgSatisfaction}
         />
+
+        {/* Row 2, Card 3: NET NPS */}
         <KpiCard
-          title="Net Promoter Score"
+          title="NET NPS"
           value={kpis.npsScore > 0 ? `+${kpis.npsScore}` : `${kpis.npsScore}`}
-          subtitle={`Scale: ${kpis.npsScaleDetected}`}
+          subtitle="Direct Net Promoter advocacy in..."
           formula={KPI_FORMULAS.npsScore}
-          highlightColor={kpis.npsScore < 0 ? 'red' : 'default'}
         />
+
+        {/* Row 2, Card 4: EXPIRES IN 30 DAYS */}
         <KpiCard
-          title="Expiring in 30 Days"
-          value={kpis.contractsExpiring30.toLocaleString()}
-          subtitle="Immediate renewal sprint"
+          title="EXPIRES IN 30 DAYS"
+          value={`${kpis.contractsExpiring30} accts`}
+          subtitle="Imminent contract cliff"
           formula={KPI_FORMULAS.contractsExpiring30}
-          highlightColor={kpis.contractsExpiring30 > 0 ? 'gold' : 'default'}
+          highlightColor={kpis.contractsExpiring30 > 0 ? 'red' : 'default'}
         />
+
+        {/* Row 2, Card 5: EXPIRES IN 60 DAYS */}
         <KpiCard
-          title="Expiring in 60 Days"
-          value={kpis.contractsExpiring60.toLocaleString()}
-          subtitle="Upcoming expiry cohort"
+          title="EXPIRES IN 60 DAYS"
+          value={`${kpis.contractsExpiring60} accts`}
+          subtitle="Renewal decision window"
           formula={KPI_FORMULAS.contractsExpiring60}
+          highlightColor="gold"
         />
+
+        {/* Row 2, Card 6: EXPIRES IN 90 DAYS */}
         <KpiCard
-          title="Expiring in 90 Days"
-          value={kpis.contractsExpiring90.toLocaleString()}
-          subtitle="Quarterly renewal pipeline"
+          title="EXPIRES IN 90 DAYS"
+          value={`${kpis.contractsExpiring90} accts`}
+          subtitle="Mid-term pipeline"
           formula={KPI_FORMULAS.contractsExpiring90}
-        />
-        <KpiCard
-          title="Model PR-AUC / ROC"
-          value={kpis.modelPrAuc ? `${(kpis.modelPrAuc).toFixed(2)} / ${(kpis.modelAuc || 0).toFixed(2)}` : 'Training...'}
-          subtitle={trainedModel?.modelName || 'Native ML'}
-          formula="Precision-Recall AUC and ROC-AUC computed on held-out test set."
-          highlightColor="navy"
         />
       </div>
 

@@ -67,7 +67,7 @@ export const TopBar: React.FC<TopBarProps> = ({
               setIsDropdownOpen(true);
             }}
             onFocus={() => setIsDropdownOpen(true)}
-            placeholder="Search Customer ID (e.g. BC-10042) or City..."
+            placeholder="Search by Customer ID (e.g. BC-10042), City, or Plan..."
             className="w-full pl-9 pr-4 py-1.5 text-xs bg-[#F5F6FA] dark:bg-[#0B1F4B] text-[#111827] dark:text-white rounded-lg border border-[#D9DCE6] dark:border-[#1E3A8A] focus:outline-none focus:ring-1 focus:ring-[#C9A227] transition-all placeholder:text-[#6B7280]"
           />
         </div>
@@ -120,17 +120,12 @@ export const TopBar: React.FC<TopBarProps> = ({
         {/* Dataset Status */}
         <div className="flex items-center gap-2 px-3 py-1 rounded-md bg-[#F5F6FA] dark:bg-[#0B1F4B] border border-[#D9DCE6] dark:border-[#1E3A8A] text-xs">
           <Database size={13} className="text-[#0B1F4B] dark:text-[#C9A227]" />
-          <span className="font-medium text-[#111827] dark:text-white truncate max-w-[140px]">
-            {datasetName}
+          <span className="font-semibold text-[#111827] dark:text-white font-mono tabular-nums">
+            {rowCount.toLocaleString()} customers
           </span>
-          <span className="text-[#6B7280] font-mono tabular-nums text-[11px]">
-            ({rowCount.toLocaleString()} rows)
+          <span className="text-[#6B7280] font-mono text-[11px]">
+            07/11/2026 11:55
           </span>
-          {isSyntheticDemo && (
-            <span className="text-[9px] uppercase font-bold tracking-wider px-1 py-0.2 rounded bg-[#C9A227]/20 text-[#856404] dark:text-[#E8D48A]">
-              Demo
-            </span>
-          )}
         </div>
 
         {/* Model Status */}
@@ -164,7 +159,7 @@ export const TopBar: React.FC<TopBarProps> = ({
       <div className="flex items-center gap-2 shrink-0">
         <button
           onClick={onOpenUpload}
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#C9A227] text-[#0B1F4B] hover:bg-[#E8D48A] transition-colors text-xs font-bold shadow-xs whitespace-nowrap"
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#1E3A8A] text-white hover:bg-[#0B1F4B] transition-colors text-xs font-semibold shadow-xs whitespace-nowrap"
           title="Upload CSV, Excel, or JSON Customer Dataset"
         >
           <Upload size={14} className="stroke-[2.5]" />
@@ -172,21 +167,12 @@ export const TopBar: React.FC<TopBarProps> = ({
         </button>
 
         <button
-          onClick={onExportReports}
-          className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[#D9DCE6] dark:border-[#1E3A8A] text-xs font-medium text-[#111827] dark:text-white hover:bg-[#F5F6FA] dark:hover:bg-[#1E3A8A] transition-colors"
-          title="Download PDF & Excel Reports"
-        >
-          <FileDown size={14} className="text-[#C9A227]" />
-          <span>Export</span>
-        </button>
-
-        <button
           onClick={onToggleChat}
           className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#0B1F4B] text-white hover:bg-[#1E3A8A] transition-colors text-xs font-semibold shadow-sm"
-          title="Ask BritConnect AI Analyst"
+          title="Ask BritConnect AI Assistant"
         >
           <Bot size={15} className="text-[#C9A227]" />
-          <span className="hidden md:inline">AI Analyst</span>
+          <span className="hidden md:inline">AI Assistant</span>
         </button>
 
         <button

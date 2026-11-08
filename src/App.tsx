@@ -10,6 +10,9 @@ import { DrilldownPage } from './pages/DrilldownPage';
 import { SegmentationPage } from './pages/SegmentationPage';
 import { ModelLabPage } from './pages/ModelLabPage';
 import { RiskScoringPage } from './pages/RiskScoringPage';
+import { RiskCalculatorPage } from './pages/RiskCalculatorPage';
+import { ExecutiveSummaryPage } from './pages/ExecutiveSummaryPage';
+import { DataQualityPage } from './pages/DataQualityPage';
 import { RecommendationsPage } from './pages/RecommendationsPage';
 import { CampaignsPage } from './pages/CampaignsPage';
 import { ChatbotView } from './components/chat/ChatbotView';
@@ -104,10 +107,13 @@ export default function App() {
           ) : (
             <>
               {activeTab === 'dashboard' && <DashboardPage onOpenUpload={() => setIsUploadModalOpen(true)} />}
+              {(activeTab === 'overview' || activeTab === 'executivesummary') && <ExecutiveSummaryPage />}
+              {activeTab === 'dataquality' && <DataQualityPage />}
               {activeTab === 'drilldown' && <DrilldownPage />}
               {activeTab === 'segmentation' && <SegmentationPage />}
               {activeTab === 'modellab' && <ModelLabPage />}
               {activeTab === 'riskscoring' && <RiskScoringPage />}
+              {activeTab === 'riskcalculator' && <RiskCalculatorPage />}
               {activeTab === 'recommendations' && <RecommendationsPage />}
               {activeTab === 'campaigns' && <CampaignsPage />}
               {activeTab === 'analyst' && <ChatbotView />}

@@ -193,8 +193,8 @@ export function computeDashboardKpis(
       if (Number(r['Churn Flag']) === 0) {
         const atRisk = Number(r['Monthly Revenue At Risk GBP']) || 0;
         monthlyRevAtRiskSum += atRisk;
-        if (atRisk >= 35) criticalRiskCount++;
-        else if (atRisk >= 20) highRiskCount++;
+        if (atRisk >= 20) criticalRiskCount++;
+        else if (atRisk >= 10) highRiskCount++;
       }
     });
   }
@@ -208,16 +208,16 @@ export function computeDashboardKpis(
     activeCustomers: activeCount,
     churnedCustomers: churnedCount,
     churnRate: Math.round(churnRate * 10) / 10,
-    activeMrr: Math.round(activeMrrSum),
+    activeMrr: Math.round(activeMrrSum * 100) / 100,
     avgMonthlyCharge: Math.round(avgMonthlyCharge * 100) / 100,
-    monthlyRevenueLost: Math.round(revenueLostSum),
-    monthlyRevenueAtRisk: Math.round(monthlyRevAtRiskSum),
-    expectedLoss12M,
+    monthlyRevenueLost: Math.round(revenueLostSum * 100) / 100,
+    monthlyRevenueAtRisk: Math.round(monthlyRevAtRiskSum * 100) / 100,
+    expectedLoss12M: Math.round(monthlyRevAtRiskSum * 12 * 100) / 100,
     criticalRiskCount,
     highRiskCount,
     criticalAndHighRiskCount,
     highRiskPct: Math.round(highRiskPct * 10) / 10,
-    totalLifetimeRevenue: Math.round(lifetimeRevSum),
+    totalLifetimeRevenue: Math.round(lifetimeRevSum * 100) / 100,
     avgTenureMonths: Math.round(avgTenureMonths * 10) / 10,
     avgSatisfaction: Math.round(avgSatisfaction * 10) / 10,
     npsScore,

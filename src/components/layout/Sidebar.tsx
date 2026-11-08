@@ -1,6 +1,7 @@
 import React from 'react';
 import {
-  LayoutDashboard,
+  LayoutGrid,
+  TrendingUp,
   Database,
   BarChart3,
   Users2,
@@ -14,6 +15,8 @@ import {
   ChevronLeft,
   ChevronRight,
   Sparkles,
+  CheckCircle2,
+  Calculator,
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -39,30 +42,34 @@ export const Sidebar: React.FC<SidebarProps> = ({
     {
       category: 'WORKFLOW',
       items: [
-        { id: 'dashboard', label: 'Overview & Executive', icon: LayoutDashboard },
-        { id: 'hub', label: 'Upload & Data Hub', icon: Database },
+        { id: 'overview', label: 'Overview', icon: LayoutGrid },
+        { id: 'hub', label: 'Upload & Data', icon: Database },
+        { id: 'dataquality', label: 'Data Quality', icon: CheckCircle2 },
       ],
     },
     {
       category: 'INTELLIGENCE',
       items: [
-        { id: 'drilldown', label: 'Churn Drivers & Analysis', icon: BarChart3 },
+        { id: 'dashboard', label: 'Executive Dashboard', icon: TrendingUp },
+        { id: 'executivesummary', label: 'Detailed Executive Summary', icon: Sparkles },
+        { id: 'drilldown', label: 'Churn Drivers', icon: BarChart3 },
         { id: 'segmentation', label: 'Customer Segments', icon: Users2 },
         { id: 'riskscoring', label: 'Customer 360 & Scores', icon: ShieldAlert },
+        { id: 'riskcalculator', label: 'Risk Score Calculator', icon: Calculator },
       ],
     },
     {
       category: 'INTERVENTION',
       items: [
         { id: 'campaigns', label: 'Campaign Tracker', icon: Target },
-        { id: 'recommendations', label: 'Action Centre (AI Playbooks)', icon: Lightbulb },
+        { id: 'recommendations', label: 'Action Centre (AI)', icon: Lightbulb },
         { id: 'analyst', label: 'AI Analytics Chat', icon: Bot },
       ],
     },
     {
       category: 'GOVERNANCE',
       items: [
-        { id: 'modellab', label: 'Model Studio & Explain', icon: Cpu },
+        { id: 'modellab', label: 'Model Studio', icon: Cpu },
         { id: 'reports', label: 'Reports & Exports', icon: FileSpreadsheet },
         { id: 'settings', label: 'Settings & Diagnostics', icon: Settings },
       ],
