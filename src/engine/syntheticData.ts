@@ -136,8 +136,8 @@ export function generateSyntheticDemoDataset(count = 5000, seed = 2026): Custome
     if (!isChurned) {
       const delta = ((i % 19) - 9) * 1.8;
       monthlyCharge = Math.round((activeBaseMrr + delta) * 100) / 100;
-      // Keep atRisk >= 20 so it classifies cleanly into critical/high risk
-      monthlyRevenueAtRisk = Math.round((activeBaseRisk + delta * 0.45) * 100) / 100;
+      // Keep atRisk >= 20 so all 3,663 active accounts classify cleanly into critical risk (>= 70%)
+      monthlyRevenueAtRisk = Math.round((activeBaseRisk + delta * 0.25) * 100) / 100;
       sumMrr += monthlyCharge;
       sumRisk += monthlyRevenueAtRisk;
     } else {
@@ -218,11 +218,49 @@ export function generateSyntheticDemoDataset(count = 5000, seed = 2026): Custome
     first['Monthly Charge GBP'] = Math.round((Number(first['Monthly Charge GBP']) + mrrDiff) * 100) / 100;
 
     const riskDiff = Math.round((92804.21 - sumRisk) * 100) / 100;
-    first['Monthly Revenue At Risk GBP'] = Math.round((Number(first['Monthly Revenue At Risk GBP']) + riskDiff) * 100) / 100;
+    if (records[100]) {
+      records[100]['Monthly Revenue At Risk GBP'] = Math.round((Number(records[100]['Monthly Revenue At Risk GBP']) + riskDiff) * 100) / 100;
+    }
 
     // Tenure exact reconciliation to 16.8 months
     const tenureDiff = 84000 - sumTenure;
     first['Tenure Months'] = Number(first['Tenure Months']) + tenureDiff;
+
+    // Calibrate discounts so that Effective Active MRR equals exactly £126,685.18
+    const targetEffMrr = 126685.18;
+    const targetTotalDiscount = Math.round((133802.04 - targetEffMrr) * 100) / 100; // 7116.86
+    let allocatedDiscount = 0;
+
+    for (let i = 0; i < targetActive; i++) {
+      if (allocatedDiscount >= targetTotalDiscount) break;
+      let d = (i % 7 === 0) ? 20 : (i % 5 === 0) ? 15 : (i % 4 === 0) ? 10 : 0;
+      if (d > 0) {
+        const rec = records[i];
+        if (rec) {
+          const discAmount = Number(rec['Monthly Charge GBP']) * (d / 100);
+          if (allocatedDiscount + discAmount <= targetTotalDiscount + 0.05) {
+            rec['Discount Percent'] = d;
+            allocatedDiscount += discAmount;
+          }
+        }
+      }
+    }
+
+    // Penny adjustment on index 1 if needed
+    let currentEff = 0;
+    for (let i = 0; i < targetActive; i++) {
+      const rec = records[i];
+      if (rec) {
+        currentEff += Number(rec['Monthly Charge GBP']) * (1 - (Number(rec['Discount Percent']) || 0) / 100);
+      }
+    }
+    const remEff = Math.round((targetEffMrr - currentEff) * 100) / 100;
+    if (remEff !== 0 && records[1]) {
+      const c1 = Number(records[1]['Monthly Charge GBP']);
+      const currentDiscVal = c1 * ((Number(records[1]['Discount Percent']) || 0) / 100);
+      const newDiscVal = currentDiscVal - remEff;
+      records[1]['Discount Percent'] = Math.round((newDiscVal / c1) * 100 * 10) / 10;
+    }
   }
 
   return records;

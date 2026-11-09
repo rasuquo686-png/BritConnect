@@ -11,6 +11,7 @@ export interface DashboardKpiSummary {
   churnedCustomers: number;
   churnRate: number; // %
   activeMrr: number; // £ active Monthly Recurring Revenue
+  effectiveActiveMrr: number; // £ effective discounted Monthly Recurring Revenue
   avgMonthlyCharge: number; // £
   monthlyRevenueLost: number; // £
   monthlyRevenueAtRisk: number; // £
@@ -66,6 +67,7 @@ export function computeDashboardKpis(
       churnedCustomers: 0,
       churnRate: 0,
       activeMrr: 0,
+      effectiveActiveMrr: 0,
       avgMonthlyCharge: 0,
       monthlyRevenueLost: 0,
       monthlyRevenueAtRisk: 0,
@@ -91,6 +93,7 @@ export function computeDashboardKpis(
   let churnedCount = 0;
   let chargeSum = 0;
   let activeMrrSum = 0;
+  let effectiveActiveMrrSum = 0;
   let revenueLostSum = 0;
   let lifetimeRevSum = 0;
   let tenureSum = 0;
@@ -122,6 +125,8 @@ export function computeDashboardKpis(
     } else {
       activeCount++;
       activeMrrSum += charge;
+      const discount = Number(r['Discount Percent']) || 0;
+      effectiveActiveMrrSum += charge * (1 - discount / 100);
 
       // Check contract expiration for active accounts
       const endDateStr = r['Contract End Date'];
@@ -209,6 +214,7 @@ export function computeDashboardKpis(
     churnedCustomers: churnedCount,
     churnRate: Math.round(churnRate * 10) / 10,
     activeMrr: Math.round(activeMrrSum * 100) / 100,
+    effectiveActiveMrr: Math.round(effectiveActiveMrrSum * 100) / 100,
     avgMonthlyCharge: Math.round(avgMonthlyCharge * 100) / 100,
     monthlyRevenueLost: Math.round(revenueLostSum * 100) / 100,
     monthlyRevenueAtRisk: Math.round(monthlyRevAtRiskSum * 100) / 100,

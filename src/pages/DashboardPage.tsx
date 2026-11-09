@@ -93,7 +93,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onOpenUpload }) =>
         <KpiCard
           title="ACTIVE MRR"
           value={`£${kpis.activeMrr.toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`}
-          subtitle={`Eff: £${kpis.activeMrr.toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`}
+          subtitle={`Eff: £${kpis.effectiveActiveMrr.toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`}
           formula={KPI_FORMULAS.activeMrr}
         />
 
